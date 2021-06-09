@@ -1,0 +1,1012 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/deloitte.css">
+		<link rel="stylesheet" href="css/font-awesome.css">
+	</head>
+	<body>
+		<div><img src="img/deloitte.png" class="deloitte-logo"></div>
+		<div class="footer"><p><b>Master Thesis Presentation</b> | Boy Raaijmakers | July 2019</p></div>
+		<div class="reveal">
+			<div class="slides">
+				<section id="title-page">
+					<img class="front" data-src="img/front.jpg">
+					<h3>Which Financial News to Trust?</h3>
+					<h5 class="text-color-white">Financial Author Assessment using Sentiment Analysis and Named Entity Linking in a Streaming Environment</h5>
+				</section>
+				<section id="agenda">
+					<h2>Agenda</h2>
+					<ul>
+						<li>Requirements & Scope</li>
+						<ul style="color: lightgrey; font-size: 22pt;">
+							<li>Thesis Background</li>	
+							<li>Research Goals</li>
+						</ul>
+						<li>Development & Results</li>
+						<ul style="color: lightgrey; font-size: 22pt;">
+							<li>Streaming Test Design</li>
+							<li>Sentiment Analysis</li>
+							<li>Named Entity Recognition</li>
+							<li>Stream Environment</li>
+							<li>Financial Author Assessment</li>
+						</ul>
+						<li>Conclusion</li>
+					</ul>
+				</section>
+				<section id="problem-description">
+					<section class="main-slide" data-background-color="#86BC25">
+						<h2>Attention!</h2>
+						<p>We are going to do a little exercise...</p>
+						<p><b class="fragment" data-fragment-index="1">Imagine you're trading stocks</b></p>
+						<!--<p class="fragment" data-fragment-index="2">Next, there will be a number of texts. Per text, answer the question:</p>-->
+						<i class="fragment" data-fragment-index="2">Would you buy or sell the stock of the considered company?</i>
+					</section>
+					<section data-autoslide="3000">
+						<div class="tweet" data-src="https://twitter.com/realDonaldTrump/status/1117604192175230976"></div>
+					</section>
+					<section data-autoslide="2600">
+						<div class="tweet" data-src="https://twitter.com/MsHannahMurphy/status/1140908653995839489"></div>
+					</section>
+					<section data-autoslide="2200">
+						<div class="news-article" style="text-align: left;">
+							<img src="img/nyt.png">
+							<h1 style="font-size: 18pt; color: black; font-weight: bold;">In Streaming Age, Classical Music Gets Lost in the Metadata</h1>
+							<p style="">
+								<b>Ben Sisario - </b>When Roopa Kalyanaraman Marcello, a classical music aficionado in Brooklyn, asked her Amazon Echo for some music recently, she had a specific request: the third movement of Beethoven’s “Emperor” Concerto.<br><br>“It kind of energizes me, motivates me to get things done,” she said.<br><br>But the Echo, a voice-activated speaker, could not find what she wanted. First it gave her the concerto’s opening movement; then, on another try, came the second movement. But not the third.<br><br>Exasperated, Ms. Kalyanaraman Marcello gave up. <br><br>“Just play something else!” she recalled saying.<br><br>Her frustration may be familiar to fans of classical music in the streaming age. The algorithms of Spotify, Apple and Amazon are carefully engineered to steer listeners to pop hits, and Schubert and Puccini can get lost in the metadata.
+							</p>
+						</div>
+					</section>
+					<section data-autoslide="1800">
+						<div class="news-article" style="text-align: left; z-index: ">
+							<img src="img/nyt.png">
+							<h1 style="font-size: 18pt; color: black; font-weight: bold;">Disney opens throttle in race to control key content</h1>
+							<p>
+								<b>Joshua Chaffin - </b>Walt Disney's move to acquire Pixar signals the Magic Kingdom's need to reinvigorate a fading animation department with the industry's best talent. Animated characters, after all, are central to Disney's business, leaping from the screen to its theme parks, consumer products and even a cartoon-themed cruise line.  Yet viewed through a broader lens, the deal highlights the growing importance of content in a media landscape being reshaped by digital distribution.  Wall Street analysts and media barons are betting that video-on-demand, mobile phones, the iPod and other emerging digital outlets will present Disney and other content companies with the opportunity to milk new revenues from their best material.  "We continue to believe content is becoming more and more valuable as distribution outlets proliferate," says Richard Greenfield, an analyst at Pali Research.<br><br>There are growing signs that buyers are prepared to pay a premium for good content. Paramount is in talks to sell the DreamWorks live-action film studio's library to a private equity firm for up to Dollars 1bn. That is a hefty sum for a library that contains less than 60 films, many of them co-owned by other investors.  Just over a year ago, a consortium led by Sony emerged victorious in a fierce fight for the MGM film library, agreeing to pay Dollars 4.8bn.  And in the radio sector, Sirius has handed shock jock Howard Stern the astronomical sum of Dollars 500m over five years in an effort to lure subscribers and advertisers.  In television, the newly liberated CBS has begun to market itself to investors as a creator of premium programmes, such as Crime Scene Investigators, while playing down its distribution assets, including radio and broadcast television networks.  Meanwhile, Disney's Pixar approach has generated talk about the future of two other mid-sized studios with a record for producing lucrative hits: DreamWorks Animation, which brought Shrek to life, and Lionsgate Entertainment, the backer of highly profitable horror films Saw and Hostel.  Both have seen their shares gain more than 5 per cent since the Pixar talks became public last week. 
+							</p>
+						</div>
+					</section>
+					<section data-autoslide="1400">
+						<div class="news-article" style="text-align: left; z-index: ">
+							<img src="img/ft.png">
+							<h1 style="font-size: 18pt; color: black; font-weight: bold;">Fixed income winner to target institutions</h1>
+							<p>
+								<b>Pauline Skypala - </b>European Credit Management is not a high profile name in fixed income management. But it has beaten the likes of Pimco, Western Asset Management, Goldman Sachs Asset Management andT Rowe Price to the top award for European fixed (active) management from Global Investors magazine for three years running.  Set up in 1999 by several ex-Merrill Lynch people, the firm now has Euros 18.6bn (Dollars 23.5bn, Pounds 12.7bn) under management from 363 institutional investors and is keen to raise its profile. "We were marketing directly to clients in the early years so it felt right to keep a low profile," says Steven Blakey, chief executive. But winning the award was a catalyst to engage a public relations adviser and seek publicity.  Speaking in the firm's boardroom in the heart of Mayfair, London, Mr Blakey says ECM is one of the largest credit buyers in Europe. That puts it on the map for issuers, whose top management will visit the office for road show presentations. "That is a core strength for ECM, as there are typically only three or four slots to meet management individually," says Mr Blakey.  ECM employs 90 people in London, and 117 in total, of whom 29 are investment professionals. The firm is focused on the lower return, lower volatility niche, targeting returns of 2-3 per cent over Euribor (euro interbank offered rate).  It focuses on fundamentals and relative value, and uses a diversified range of fixed income assets, including investment grade corporate bonds, high yield bonds, emerging market bonds, asset backed securities and leveraged loans.  "We felt, in 1999, that insurance companies and pension funds did not have the resources to manage the whole spectrum of credit. Our vision was to take advantage of the euro and manage fixed income in a more efficient and pure way," says Mr Blakey.  Credit is only just becoming a core asset class in Europe, whereas in the US it already has that status, for institutional and retail investors. ECM is enabling investors to invest in the asset class through pooled funds based in Luxembourg or Dublin, says Mr Blakey. "We have not built the business through lots of segregated accounts, but we do use customised structures that suit clients' different liability profiles."  The firm built its own IT systems and middle office to customise reporting to meet the transparency requirements of its clients, says Stephen Zinser, chief investment officer.  In a further move to meet the needs of clients, ECM is a rarity among fixed income managers in hedging interest rate risk.
+							</p>
+						</div>
+					</section>
+					<section>
+						<h1>Got them all?</h1>
+					</section>
+					<section>
+						<h2>Information overload problem</h2>
+						<p><b>'2.5 quintillion bytes of data created each day'</b><span style="font-size: 26pt;"> - Forbes 2018</span></p>
+					</section>
+					<section>
+						<h2>How to handle this data?</h2>
+						<div class="fragment" style="display:flex;">
+							<div style="width:40%; margin-left: 10%">
+								<img src="img/data.png" style="border:none;">
+								<p>Expensive Storage</p>
+							</div>
+							<div style="width:40%; margin-right: 10%">
+								<img src="img/time.png" style="border:none;">
+								<p>Immediate Action</p>
+							</div>
+						</div>
+					</section>
+					<section>
+						<h2>Which Financial News to Trust?</h2>
+						<p>Sentiment Analysis and Named Entity Linking in a Stream of Financial News Article</p>
+					</section>
+				</section>
+				<section id="research-questions">
+					<section class="main-slide" data-background-color="#86BC25">
+						<h2>Research Goals</h2>
+						<p>The scope and purpose of the work</p>
+					</section>
+					<section>
+						<h2>Lexicon-based Sentiment Analysis</h2>
+						<p>"The lovely princess liked eating the bad apple."</p>
+						<table>
+							<tr>
+								<th>Word</th>
+								<td>good</td>
+								<td>bad</td>
+								<td>lovely</td>
+								<td>liked</td>
+								<td>hated</td>
+								<td>apple</td>
+							</tr>
+							<tr>
+								<th>Sentiment</th>
+								<td>+1.00</td>
+								<td>-1.00</td>
+								<td>+0.70</td>
+								<td>+0.66</td>
+								<td>-0.75</td>
+								<td>+0.20</td>
+							</tr>
+						</table>
+
+						<p style="margin-top: 75px;">lovely + liked + bad = sentiment</p>
+						<p>0.70 + 0.66 - 1.00 = 0.36</p>
+						<p style="font-weight: bold; color: #86BC25;">Positive</p>
+					</section>
+					<section>
+						<h2>Lexicon-based Sentiment Analysis Goals</h2>
+						<img src="img/rq-sentiment-batch.png" style="border:none; width:80%;">
+						<img src="img/rq-sentiment-adausa.png" style="border:none; width:80%;">
+					</section>
+					<section>
+						<h2>Named entity linking</h2>
+						<p>"John always goes to Carrefour to do his groceries."</p>
+						<table>
+							<tr>
+								<th>Word</th>
+								<td><span style="font-weight: bold; color: #86BC25;">John</span></td>
+								<td>always</td>
+								<td>goes</td>
+								<td>to</td>
+								<td><span style="font-weight: bold; color: #86BC25;">Carrefour</span></td>
+								<td>to</td>
+								<td>do</td>
+								<td>his</td>
+								<td>groceries</td>
+							</tr>
+							<tr>
+								<th>Entity</th>
+								<td><span style="font-weight: bold; color: #86BC25;">PERSON</span></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><span style="font-weight: bold; color: #86BC25;">COMPANY</span></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<th>Link</th>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><span style="font-weight: bold; color: #86BC25;">http://dbpedia.org/<br>resource/Carrefour</span></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+						</table>
+						<iframe src="http://dbpedia.org/page/Carrefour" class="fragment" style="width: 80%; height: 430px;"></iframe>
+					</section>
+					<section>
+						<h2>Named entity linking Goals</h2>
+						<div style="width:100%; height:520px;">
+							<img src="img/rq-ner-nel.png" style="position: absolute; border:none;bottom:0;left:0;">
+						</div>
+					</section>
+					<section>
+						<h2>Stream Mining</h2>
+						<p>Batch- and stream-based machine learning</p>
+						<div>
+							<img src="img/batch.png" style="border:none;">
+							<img src="img/stream.png" style="border:none;">
+						</div>
+					</section>
+					<!--<section>
+						<h2>Stream Mining Windows</h2>
+						<div>
+							<img src="img/stream-line.png" style="border:none;">
+							<img src="img/windows-tumbling.png" style="border:none;" class="fragment">
+							<img src="img/windows-sliding.png" style="border:none;" class="fragment">
+							<img src="img/windows-global.png" style="border:none;" class="fragment">
+						</div>
+					</section>-->
+					<section>
+						<h2>Stream Mining Goals</h2>
+						<img src="img/stream-goal.png" style="border: none; width: 70%;">
+					</section>
+				</section>
+				<section id="test-design">
+					<section class="main-slide" data-background-color="#86BC25">
+						<h2>Test design</h2>
+						<p>Challenging the research questions</p>
+					</section>
+					<section>
+						<h2>Streaming environment</h2>
+						<img src="img/test.png" style="border:none">
+					</section>
+					<section>
+						<h2>Validation data</h2>
+						<img src="img/dataset.png" style="border:none;">
+					</section>
+					<section>
+						<h2>State-of-the-art Results</h2>
+						<div style="display: flex;">
+							<div style="width: 45%; margin-right: 5%;">
+								<img src="img/sentiment.png" style="border: none; width: 20%;">
+								<h3 style="color: white;">Sentiment Analysis</h3>
+								<table style="font-size: 21;">
+									<tr>
+										<th>Lexicon</th>
+										<th class="fragment" data-fragment-index="1">Accuracy</th>
+										<th class="fragment" data-fragment-index="1">Precision</th>
+										<th class="fragment" data-fragment-index="1">Recall</th>
+										<th class="fragment" data-fragment-index="1">F1-score</th>
+									</tr>
+									<tr>
+										<td>SenticNet</td>
+										<td class="fragment" data-fragment-index="1">0.562</td>
+										<td class="fragment" data-fragment-index="1">0.620</td>
+										<td class="fragment" data-fragment-index="1">0.496</td>
+										<td class="fragment" data-fragment-index="1">0.551</td>
+									</tr>
+									<tr>
+										<td>SentiStrength</td>
+										<td class="fragment" data-fragment-index="1">0.611</td>
+										<td class="fragment" data-fragment-index="1">0.588</td>
+										<td class="fragment" data-fragment-index="1">0.945</td>
+										<td class="fragment" data-fragment-index="1">0.725</td>
+									</tr>
+									<tr>
+										<td>Sentiment140</td>
+										<td class="fragment" data-fragment-index="1">0.574</td>
+										<td class="fragment" data-fragment-index="1">0.604</td>
+										<td class="fragment" data-fragment-index="1">0.618</td>
+										<td class="fragment" data-fragment-index="1">0.611</td>
+									</tr>
+									<tr>
+										<td>NRC Hashtag</td>
+										<td class="fragment" data-fragment-index="1">0.495</td>
+										<td class="fragment" data-fragment-index="1">0.642</td>
+										<td class="fragment" data-fragment-index="1">0.151</td>
+										<td class="fragment" data-fragment-index="1">0.245</td>
+									</tr>
+									<tr>
+										<td>Densify</td>
+										<td class="fragment" data-fragment-index="1">0.610</td>
+										<td class="fragment" data-fragment-index="1">0.688</td>
+										<td class="fragment" data-fragment-index="1">0.514</td>
+										<td class="fragment" data-fragment-index="1">0.588</td>
+									</tr>
+									<tr>
+										<td>Textblob SA</td>
+										<td class="fragment" data-fragment-index="1">0.570</td>
+										<td class="fragment" data-fragment-index="1">0.562</td>
+										<td class="fragment" data-fragment-index="1">0.933</td>
+										<td class="fragment" data-fragment-index="1">0.702</td>
+									</tr>
+									<tr>
+										<td>SentiWordNet3</td>
+										<td style="font-weight: bold; color: #86BC25" class="fragment" data-fragment-index="1">0.616</td>
+										<td class="fragment" data-fragment-index="1">0.590</td>
+										<td style="font-weight: bold; color: #86BC25" class="fragment" data-fragment-index="1">0.960</td>
+										<td style="font-weight: bold; color: #86BC25" class="fragment" data-fragment-index="1">0.730</td>
+									</tr>
+									<tr>
+										<td>Naive Bayes</td>
+										<td class="fragment" data-fragment-index="1">0.591</td>
+										<td style="font-weight: bold; color: #86BC25" class="fragment" data-fragment-index="1">0.848</td>
+										<td class="fragment" data-fragment-index="1">0.332</td>
+										<td class="fragment" data-fragment-index="1">0.477</td>
+									</tr>
+								</table>
+								<p class="fragment" data-fragment-index="1">SentiWordNet3</p>
+							</div>
+							<div style="width: 45%; margin-left: 5%;">
+								<img src="img/ner.png" style="border: none; width: 20%;">
+								<h3 style="color: white;">NER + NEL</h3>
+								<table style="font-size: 21;">
+									<tr>
+										<th>NER-model</th>
+										<th class="fragment" data-fragment-index="3">Accuracy</th>
+										<th class="fragment" data-fragment-index="3">Precision</th>
+										<th class="fragment" data-fragment-index="3">Recall</th>
+										<th class="fragment" data-fragment-index="3">F1-score</th>
+										<th class="fragment" data-fragment-index="4">DBPedia Spotlight</th>
+									</tr>
+									<tr>
+										<td>Apache OpenNLP</td>
+										<td class="fragment" data-fragment-index="3">0.354</td>
+										<td style="font-weight: bold; color: #86BC25" class="fragment" data-fragment-index="3">0.301</td>
+										<td class="fragment" data-fragment-index="3">0.314</td>
+										<td class="fragment" data-fragment-index="3">0.181</td>
+										<td class="fragment" data-fragment-index="4">0.575</td>
+									</tr>
+									<tr>
+										<td>Stanford CoreNLP</td>
+										<td style="font-weight: bold; color: #86BC25" class="fragment" data-fragment-index="3">0.487</td>
+										<td class="fragment" data-fragment-index="3">0.299</td>
+										<td style="font-weight: bold; color: #86BC25" class="fragment" data-fragment-index="3">0.397</td>
+										<td style="font-weight: bold; color: #86BC25" class="fragment" data-fragment-index="3">0.250</td>
+										<td class="fragment" data-fragment-index="4">0.716</td>
+									</tr>
+									<tr>
+										<td>Illinois CogCompNLP</td>
+										<td class="fragment" data-fragment-index="3">0.401</td>
+										<td class="fragment" data-fragment-index="3">0.289</td>
+										<td class="fragment" data-fragment-index="3">0.354</td>
+										<td class="fragment" data-fragment-index="3">0.192</td>
+										<td style="font-weight: bold; color: #86BC25" class="fragment" data-fragment-index="4">0.772</td>
+									</tr>
+									<tr>
+										<td>spaCy NER</td>
+										<td class="fragment" data-fragment-index="3">0.350</td>
+										<td class="fragment" data-fragment-index="3">0.187</td>
+										<td class="fragment" data-fragment-index="3">0.293</td>
+										<td class="fragment" data-fragment-index="3">0.126</td>
+										<td class="fragment" data-fragment-index="4">0.741</td>
+									</tr>
+								</table>
+								<p style="margin-top: 56px;" class="fragment" data-fragment-index="4">Stanford CoreNLP</p>
+							</div>
+						</div>
+					</section>
+				</section>
+				<section id="sentiment-analysis">
+					<section class="main-slide" data-background-color="#86BC25">
+						<h2>Sentiment Analysis</h2>
+						<p>Adaptive Unsupervised Sentiment Analysis</p>
+						<h3>AdaUSA</h3>
+					</section>
+					<section>
+						<h2>Contextual sentiments</h2>
+						<p>"The <span style="font-weight: bold; color: #86BC25">lovely</span> princess liked eating the bad apple."</p>
+						<table style="color:white;">
+							<tr>
+								<th>Word</th>
+								<td>good</td>
+								<td>bad</td>
+								<td><span style="font-weight: bold; color: #86BC25">lovely</span></td>
+								<td>liked</td>
+								<td>hated</td>
+								<td>apple</td>
+							</tr>
+							<tr>
+								<th>Sentiment</th>
+								<td>+1.00</td>
+								<td>-1.00</td>
+								<td><span style="font-weight: bold; color: #86BC25">+0.70</span></td>
+								<td>+0.66</td>
+								<td>-0.75</td>
+								<td>+0.20</td>
+							</tr>
+						</table>
+						<div style="display: flex; height: 500px;">
+							<div style="width: 50%;">
+								<img class="fragment" data-fragment-index="1" src="img/senticircle-empty.png" style="border:none; position: absolute; z-index: 5; left:0; width: 45%;">
+								<img class="fragment" data-fragment-index="2" src="img/senticircle-points.png" style="border:none; position: absolute; z-index: 6; left:0; width: 45%;">
+								<img class="fragment" data-fragment-index="3" src="img/senticircle-context.png" style="border:none; position: absolute; z-index: 7; left:0; width: 45%;">
+							</div>
+							<div style="width: 40%; margin-right: 10%;">
+								<img src="img/adapt.png" class="fragment" data-fragment-index="4" style="border:none; width:100px; margin-top:50px;">
+								<p class="fragment" data-fragment-index="4"><b>Adapt</b></p>
+								<p class="fragment" data-fragment-index="4">Prior: +0.70</p>
+								<p class="fragment" data-fragment-index="4">Context: +0.10</p>
+								<p class="fragment" data-fragment-index="5">Adjust sentiment down</p>
+							</div>
+						</div>
+					</section>
+					<section>
+						<h2>Learning over time</h2>
+						<img src="img/learn-tumbled.png" style="border:none;" class="fragment" data-fragment-index="0">
+						<img src="img/learn-slid.png" style="border:none;" class="fragment" data-fragment-index="0">
+					</section>
+					<section>
+						<h2>Forgetting over time</h2>
+						<img src="img/forget-tumbled.png" style="border:none;" class="fragment" data-fragment-index="0">
+						<img src="img/forget-slid.png" style="border:none;" class="fragment" data-fragment-index="0">
+					</section>
+					<section>
+						<h2>Results</h2>
+						<table style="font-size:32px; text-align: center;" class="fragment" data-fragment-index="0">
+							<tr>
+								<th>Learning Behavior</th>
+								<th>Forgetting Behavior</th>
+								<th class="fragment" data-fragment-index="0">Accuracy</th>
+								<th class="fragment" data-fragment-index="0">Precision</th>
+								<th class="fragment" data-fragment-index="0">Recall</th>
+								<th class="fragment" data-fragment-index="0">F1-score</th>
+							</tr>
+							<tr>
+								<td>No</td>
+								<td>Any</td>
+								<td class="fragment" data-fragment-index="0">0.616</td>
+								<td class="fragment" data-fragment-index="0">0.590</td>
+								<td class="fragment" data-fragment-index="0">0.960</td>
+								<td class="fragment" data-fragment-index="0">0.730</td>
+							</tr>
+							<tr>
+								<td>Tumbled</td>
+								<td>No</td>
+								<td class="fragment" data-fragment-index="2">0.617</td>
+								<td class="fragment" data-fragment-index="2">0.590</td>
+								<td class="fragment" data-fragment-index="2">0.964</td>
+								<td class="fragment" data-fragment-index="2">0.732</td>
+							</tr>
+							<tr>
+								<td>Tumbled</td>
+								<td>Tumbled</td>
+								<td class="fragment" data-fragment-index="2">0.616</td>
+								<td class="fragment" data-fragment-index="2">0.589</td>
+								<td class="fragment" data-fragment-index="2">0.963</td>
+								<td class="fragment" data-fragment-index="2">0.731</td>
+							</tr>
+							<tr>
+								<td>Tumbled</td>
+								<td>Slid</td>
+								<td class="fragment" data-fragment-index="2">0.616</td>
+								<td class="fragment" data-fragment-index="2">0.589</td>
+								<td class="fragment" data-fragment-index="2">0.963</td>
+								<td class="fragment" data-fragment-index="2">0.731</td>
+							</tr>
+							<tr>
+								<td>Slid</td>
+								<td>No</td>
+								<td class="fragment" data-fragment-index="2">0.603</td>
+								<td class="fragment" data-fragment-index="2">0.580</td>
+								<td class="fragment" data-fragment-index="2">0.966</td>
+								<td class="fragment" data-fragment-index="2">0.725</td>
+							</tr>
+							<tr>
+								<td>Slid</td>
+								<td>Tumbled</td>
+								<td style="font-weight: bold; color: #86BC25" class="fragment" data-fragment-index="2">0.666</td>
+								<td style="font-weight: bold; color: #86BC25" class="fragment" data-fragment-index="2">0.622</td>
+								<td style="font-weight: bold; color: #86BC25" class="fragment" data-fragment-index="2">0.967</td>
+								<td style="font-weight: bold; color: #86BC25" class="fragment" data-fragment-index="2">0.757</td>
+							</tr>
+							<tr>
+								<td>Slid</td>
+								<td>Slid</td>
+								<td class="fragment" data-fragment-index="2">0.627</td>
+								<td class="fragment" data-fragment-index="2">0.597</td>
+								<td class="fragment" data-fragment-index="2">0.961</td>
+								<td class="fragment" data-fragment-index="2">0.736</td>
+							</tr>
+						</table>
+						<p class="fragment" data-fragment-index="2"><b>5.0% Increase over baseline</b></p>
+					</section>
+				</section>
+				<section id="named-entity-recognition">
+					<section class="main-slide" data-background-color="#86BC25">
+						<h2>Named Entity Recognition</h2>
+						<p>Absolute and Relative dominance post-processing</p>
+						<h3>ADom- and RDom-selection</h3>
+					</section>
+					<section>
+						<h2>Company dominance</h2>
+						<div style="display: flex;">
+							<div style="width: 40%; margin-left: 5%; margin-right: 5%; font-size: 16pt; background-color: #fff; color:#000; text-align: left; border-radius: 10px;">
+								<p style="margin: 16px;"><b>19-11-2017 Financial Times - </b>No one in Silicon Valley wants to be called a "chip company" these days. <span style="font-weight: bold; color: #86BC25;">Qualcomm</span>, which makes the processors found in many <span style="font-weight: bold; color: #86BC25;">Android</span> phones and <span style="font-weight: bold; color: #86BC25;">iPhone</span> modems, describes itself as a "platform company". <span style="font-weight: bold; color: #86BC25;">Intel</span>, once proudly "inside" most of the world's PCs, now positions itself as a "data company". <span style="font-weight: bold; color: #86BC25;">Nvidia</span>, whose soaring share price has made it one of the best-performing stocks of any sector in the past two years, describes its graphical processors as "amplifying human intelligence", thanks to their growing role in deep learning research.  Yet just as quickly as semiconductor companies are trying to rebrand themselves as something else, dealmakers are rushing into the sector.</p>
+							</div>
+							<div style="width: 40%; margin-right: 5%; margin-left: 5%; font-size: 16pt; background-color: #fff; color:#000; text-align: left; border-radius: 10px;">
+								<p style="margin: 16px;"><b>25-07-2017 Financial Times - </b><span style="font-weight: bold; color: #86BC25;">Samsung Electronics</span> is expected to end <span style="font-weight: bold; color: #86BC25;">Intel</span>'s quarter-century reign as the biggest chipmaker by sales and outstrip smartphone rival <span style="font-weight: bold; color: #86BC25;">Apple</span> in quarterly profits in the coming days, thanks to booming demand for one of its simplest products: the humble memory chip.  Increased uses, from smartphones to cars and the Internet of Things, have led to capacity shortages for flash memory chips, driving up prices, with <span style="font-weight: bold; color: #86BC25;">Samsung</span> the chief beneficiary. The initial rise of the <span style="font-weight: bold; color: #86BC25;">IBM</span> PC carried <span style="font-weight: bold; color: #86BC25;">Intel</span> to the top of the semiconductor market in 1992, when it overtook thenleader <span style="font-weight: bold; color: #86BC25;">NEC</span>. That era is set to end tomorrow when <span style="font-weight: bold; color: #86BC25;">Samsung</span> reports its latest results. The South Korean group's anticipated semiconductor revenues of up to 15bn are expected to exceed its US rival's forecast of 14.4bn for the second quarter.</p>
+							</div>
+						</div>
+					</section>
+					<section>
+						<h2>Absolute dominance</h2>
+						<div style="display: flex;">
+							<div style="width: 40%; margin-right: 5%; margin-left: 5%; font-size: 16pt; background-color: #fff; color:#000; text-align: left; border-radius: 10px;">
+								<p style="margin: 16px;"><b>25-07-2017 Financial Times - </b><span style="font-weight: bold; color: #86BC25;">Samsung Electronics</span> is expected to end <span style="font-weight: bold; color: #86BC25;">Intel</span>'s quarter-century reign as the biggest chipmaker by sales and outstrip smartphone rival <span style="font-weight: bold; color: #86BC25;">Apple</span> in quarterly profits in the coming days, thanks to booming demand for one of its simplest products: the humble memory chip.  Increased uses, from smartphones to cars and the Internet of Things, have led to capacity shortages for flash memory chips, driving up prices, with <span style="font-weight: bold; color: #86BC25;">Samsung</span> the chief beneficiary. The initial rise of the <span style="font-weight: bold; color: #86BC25;">IBM</span> PC carried <span style="font-weight: bold; color: #86BC25;">Intel</span> to the top of the semiconductor market in 1992, when it overtook thenleader <span style="font-weight: bold; color: #86BC25;">NEC</span>. That era is set to end tomorrow when <span style="font-weight: bold; color: #86BC25;">Samsung</span> reports its latest results. The South Korean group's anticipated semiconductor revenues of up to 15bn are expected to exceed its US rival's forecast of 14.4bn for the second quarter.</p>
+							</div>
+							<div style="width: 40%; margin-right: 5%; margin-left: 5%;">
+								<h4 class="fragment" data-fragment-index="0">Count companies</h4>
+								<table style="font-size: 22px; margin-bottom: 20px;" class="fragment" data-fragment-index="0">
+									<tr>
+										<th>Company</th>
+										<td>Samsung</td>
+										<td>Intel</td>
+										<td>Apple</td>
+										<td>IBM</td>
+										<td>NEC</td>
+									</tr>
+									<tr>
+										<th>Count</th>
+										<td>3</td>
+										<td>2</td>
+										<td>1</td>
+										<td>1</td>
+										<td>1</td>
+									</tr>
+								</table>
+								<h4 class="fragment" data-fragment-index="1">Assess domanince</h4>
+								<p class="fragment" data-fragment-index="1">Samsung is present 3 times thus has Absolute Dominance 3.</p>
+							</div>
+						</div>
+					</section>
+					<section>
+						<h2>Relative dominance</h2>
+						<div style="display: flex;">
+							<div style="width: 40%; margin-right: 5%; margin-left: 5%; font-size: 16pt; background-color: #fff; color:#000; text-align: left; border-radius: 10px;">
+								<p style="margin: 16px;"><b>25-07-2017 Financial Times - </b><span style="font-weight: bold; color: #86BC25;">Samsung Electronics</span> is expected to end <span style="font-weight: bold; color: #86BC25;">Intel</span>'s quarter-century reign as the biggest chipmaker by sales and outstrip smartphone rival <span style="font-weight: bold; color: #86BC25;">Apple</span> in quarterly profits in the coming days, thanks to booming demand for one of its simplest products: the humble memory chip.  Increased uses, from smartphones to cars and the Internet of Things, have led to capacity shortages for flash memory chips, driving up prices, with <span style="font-weight: bold; color: #86BC25;">Samsung</span> the chief beneficiary. The initial rise of the <span style="font-weight: bold; color: #86BC25;">IBM</span> PC carried <span style="font-weight: bold; color: #86BC25;">Intel</span> to the top of the semiconductor market in 1992, when it overtook thenleader <span style="font-weight: bold; color: #86BC25;">NEC</span>. That era is set to end tomorrow when <span style="font-weight: bold; color: #86BC25;">Samsung</span> reports its latest results. The South Korean group's anticipated semiconductor revenues of up to 15bn are expected to exceed its US rival's forecast of 14.4bn for the second quarter.</p>
+							</div>
+							<div style="width: 40%; margin-right: 5%; margin-left: 5%;">
+								<h4>Count companies</h4>
+								<table style="font-size: 22px; margin-bottom: 20px;">
+									<tr>
+										<th>Company</th>
+										<td>Samsung</td>
+										<td>Intel</td>
+										<td>Apple</td>
+										<td>IBM</td>
+										<td>NEC</td>
+									</tr>
+									<tr>
+										<th>Count</th>
+										<td>3</td>
+										<td>2</td>
+										<td>1</td>
+										<td>1</td>
+										<td>1</td>
+									</tr>
+								</table>
+								<h4 class="fragment" data-fragment-index="0">Assess domanince</h4>
+								<p  class="fragment" data-fragment-index="0">Samsung is present 1 time more than Intel thus has Relative Dominance 1.</p>
+							</div>
+						</div>
+					</section>
+					<section>
+						<h2>Results</h2>
+						<table style="font-size:32px; text-align: center;" class="fragment" data-fragment-index="0">
+							<tr>
+								<th colspan="3">ADom-selection</th>
+								<th colspan="3">RDom-selection</th>
+							</tr>
+							<tr>
+								<th>ADom<sub>i</sub></th>
+								<th>Article portion</th>
+								<th>Classified correctly</th>
+								<th>RDom<sub>i</sub></th>
+								<th>Article portion</th>
+								<th>Classified correctly</th>
+							</tr>
+							<tr>
+								<td>ADom<sub>0</sub></td><td class="fragment" data-fragment-index="0">1.000</td><td class="fragment" data-fragment-index="0">0.487</td><td>RDom<sub>0</sub></td><td class="fragment" data-fragment-index="0">1.000</td><td class="fragment" data-fragment-index="0">0.487</td>
+							</tr>
+							<tr>
+								<td>ADom<sub>1</sub></td><td class="fragment" data-fragment-index="2">0.995</td><td class="fragment" data-fragment-index="2">0.490</td><td>RDom<sub>1</sub></td><td class="fragment" data-fragment-index="2">0.995</td><td class="fragment" data-fragment-index="2">0.493</td>
+							</tr>
+							<tr>
+								<td>ADom<sub>2</sub></td><td class="fragment" data-fragment-index="2">0.864</td><td class="fragment" data-fragment-index="2">0.533</td><td>RDom<sub>2</sub></td><td class="fragment" data-fragment-index="2">0.479</td><td class="fragment" data-fragment-index="2">0.681</td>
+							</tr>
+							<tr>
+								<td>ADom<sub>3</sub></td><td class="fragment" data-fragment-index="2">0.630</td><td class="fragment" data-fragment-index="2">0.612</td><td>RDom<sub>3</sub></td><td class="fragment" data-fragment-index="2">0.330</td><td class="fragment" data-fragment-index="2">0.740</td>
+							</tr>
+							<tr>
+								<td>ADom<sub>4</sub></td><td class="fragment" data-fragment-index="2">0.463</td><td class="fragment" data-fragment-index="2">0.670</td><td>RDom<sub>4</sub></td><td class="fragment" data-fragment-index="2">0.238</td><td class="fragment" data-fragment-index="2">0.775</td>
+							</tr>
+							<tr>
+								<td>ADom<sub>5</sub></td><td class="fragment" data-fragment-index="2">0.341</td><td class="fragment" data-fragment-index="2">0.704</td><td>RDom<sub>5</sub></td><td class="fragment" data-fragment-index="2">0.171</td><td class="fragment" data-fragment-index="2">0.787</td>
+							</tr>
+							<tr>
+								<td>ADom<sub>6</sub></td><td class="fragment" data-fragment-index="2">0.254</td><td class="fragment" data-fragment-index="2">0.723</td><td>RDom<sub>6</sub></td><td class="fragment" data-fragment-index="2">0.124</td><td class="fragment" data-fragment-index="2">0.796</td>
+							</tr>
+							<tr>
+								<td>ADom<sub>7</sub></td><td class="fragment" data-fragment-index="2">0.190</td><td class="fragment" data-fragment-index="2">0.728</td><td>RDom<sub>7</sub></td><td class="fragment" data-fragment-index="2">0.086</td><td class="fragment" data-fragment-index="2">0.805</td>
+							</tr>
+							<tr>
+								<td>ADom<sub>8</sub></td><td class="fragment" data-fragment-index="2">0.142</td><td class="fragment" data-fragment-index="2" style="font-weight: bold; color: #86BC25">0.741</td><td>RDom<sub>8</sub></td><td class="fragment" data-fragment-index="2">0.062</td><td class="fragment" data-fragment-index="2" style="font-weight: bold; color: #86BC25">0.812</td>
+							</tr>
+						</table>
+					</section>
+				</section>
+				<section id="execution-environment">
+					<section class="main-slide" data-background-color="#86BC25">
+						<h2>Execution Environment</h2>
+						<p>Process articles on-the-fly</p>
+						<h3>Apache Storm and Flink</h3>
+					</section>
+					<section>
+						<h2>Apache Storm</h2>
+						<img src="img/storm-throughput.png" style="border: none; width:90%;">
+					</section>
+					<section>
+						<h2>Apache Flink</h2>
+						<img src="img/flink-throughput.png" style="border: none; width:90%;">
+					</section>
+					<section>
+						<h2>Results</h2>
+						<p>Processing time of the complete environment on 1000 consecutive articles.</p>
+						<div style="display:flex;" class="fragment">
+							<div style="width:40%; margin-left: 10%">
+								<img src="img/storm-logo.png" style="border:none; width: 160px;">
+								<p>1293.07 sec</p>
+							</div>
+							<div style="width:40%; margin-right: 10%">
+								<img src="img/flink-logo.png" style="border:none; width: 160px;">
+								<p>436.22 sec</p>
+							</div>
+						</div>
+					</section>
+				</section>
+				<section id="author-assessment">
+					<section class="main-slide" data-background-color="#86BC25">
+						<h2>Author Assessment</h2>
+						<p>What impact do authors make?</p>
+					</section>
+					<section>
+						<h2>Stock ticker retrieval</h2>
+						<div style="width:100%; height:520px;">
+							<img src="img/stock-begin.png" style="position:absolute; bottom:0; left:175px; height: 80%; border: none;">
+							<img src="img/stock-sparql.png" style="position:absolute; bottom:0; left:175px; height: 80%; border: none;">
+							<img src="img/stock-yahoo.png" style="position:absolute; bottom:0; left:175px; height: 80%; border: none;">
+							<img src="img/stock-full.png" style="position:absolute; bottom:0; left:175px; height: 80%; border: none;">
+						</div>
+					</section>
+					<section>
+						<h2>Full architecture</h2>
+						<img src="img/full-architecture.png" style="border:none;">
+					</section>
+					<section>
+						<h2>Author Assessment</h2>
+						<p>Sentiment analysis and entity recognition per author:</p>
+						<table data-fragment-index="0">
+							<tr>
+								<th>Author</th>
+								<th>Expertise</th>
+								<th class="fragment" data-fragment-index="0">Sentiment accuracy</th>
+								<th class="fragment" data-fragment-index="0">NER accuracy</th>
+							</tr>
+							<tr>
+								<td>Andy Sharman</td>
+								<td>Cars and Vehicle Industry</td>
+								<td class="fragment" data-fragment-index="2">0.426</td>
+								<td style="color: #86BC25; font-weight: bold;" class="fragment" data-fragment-index="2">0.778</td>
+							</tr>
+							<tr>
+								<td>Hannah Kuchler</td>
+								<td>Biotech and Digital Health</td>
+								<td class="fragment" data-fragment-index="2">0.530</td>
+								<td class="fragment" data-fragment-index="2">0.731</td>
+							</tr>
+							<tr>
+								<td>Joshua Chaffin</td>
+								<td>New York General Correspondent</td>
+								<td class="fragment" data-fragment-index="2">0.574</td>
+								<td class="fragment" data-fragment-index="2">0.697</td>
+							</tr>
+							<tr>
+								<td>Madison Marriage</td>
+								<td>Accounting and Tax</td>
+								<td style="color: #86BC25; font-weight: bold;" class="fragment" data-fragment-index="2">0.728</td>
+								<td style="color: #86BC25; font-weight: bold;" class="fragment" data-fragment-index="2">0.782</td>
+							</tr>
+							<tr>
+								<td>Pauline Skypala</td>
+								<td>Freelance Journalist Economics</td>
+								<td style="color: #86BC25; font-weight: bold;" class="fragment" data-fragment-index="2">0.822</td>
+								<td class="fragment" data-fragment-index="2">0.671</td>
+							</tr>
+							<tr>
+								<td>Peggy Hollinger</td>
+								<td>Aerospace and Defensive Industries</td>
+								<td style="color: #86BC25; font-weight: bold;" class="fragment" data-fragment-index="2">0.731</td>
+								<td class="fragment" data-fragment-index="2">0.633</td>
+							</tr>
+							<tr>
+								<td>Pilita Clark</td>
+								<td>Business and Market</td>
+								<td style="color: #86BC25; font-weight: bold;" class="fragment" data-fragment-index="2">0.704</td>
+								<td class="fragment" data-fragment-index="2">0.725</td>
+							</tr>
+							<tr>
+								<td>Robert Wright</td>
+								<td>Social and Governmental Policy</td>
+								<td class="fragment" data-fragment-index="2">0.562</td>
+								<td class="fragment" data-fragment-index="2">0.654</td>
+							</tr>
+							<tr>
+								<td>Steve Johnson</td>
+								<td>Deputy editor EM Squared (tech)</td>
+								<td style="color: #86BC25; font-weight: bold;" class="fragment" data-fragment-index="2">0.829</td>
+								<td style="color: #86BC25; font-weight: bold;" class="fragment" data-fragment-index="2">0.782</td>
+							</tr>
+							<tr>
+								<td>Tim Bradshaw</td>
+								<td>Digital Technology Industries</td>
+								<td style="color: #86BC25; font-weight: bold;" class="fragment" data-fragment-index="2">0.782</td>
+								<td style="color: #86BC25; font-weight: bold;" class="fragment" data-fragment-index="2">0.802</td>
+							</tr>
+						</table>
+					</section>
+					<section>
+						<h2>Author Assessment</h2>
+						<p>Author performance over linked articles.</p>
+						<table>
+							<tr>
+								<th>Author</th>
+								<th>Expertise</th>
+								<th class="fragment" data-fragment-index="0">Tickers Linked</th>
+								<th class="fragment" data-fragment-index="0">Correctly Written</th>
+							</tr>
+							<tr>
+								<td>Andy Sharman</td>
+								<td>Cars and Vehicle Industry</td>
+								<td class="fragment" data-fragment-index="2">0.553</td>
+								<td class="fragment" data-fragment-index="2">0.487</td>
+							</tr>
+							<tr>
+								<td>Hannah Kuchler</td>
+								<td>Biotech and Digital Health</td>
+								<td style="color: #86BC25; font-weight: bold;" class="fragment" data-fragment-index="2">0.633</td>
+								<td style="color: #86BC25; font-weight: bold;" class="fragment" data-fragment-index="2">0.556</td>
+							</tr>
+							<tr>
+								<td>Joshua Chaffin</td>
+								<td>New York General Correspondent</td>
+								<td class="fragment" data-fragment-index="2">0.378</td>
+								<td class="fragment" data-fragment-index="2">0.364</td>
+							</tr>
+							<tr>
+								<td>Madison Marriage</td>
+								<td>Accounting and Tax</td>
+								<td style="color: #86BC25; font-weight: bold;" class="fragment" data-fragment-index="2">0.576</td>
+								<td class="fragment" data-fragment-index="2">0.223</td>
+							</tr>
+							<tr>
+								<td>Pauline Skypala</td>
+								<td>Freelance Journalist Economics</td>
+								<td class="fragment" data-fragment-index="2">0.448</td>
+								<td style="color: #86BC25; font-weight: bold;" class="fragment" data-fragment-index="2">0.601</td>
+							</tr>
+							<tr>
+								<td>Peggy Hollinger</td>
+								<td>Aerospace and Defensive Industries</td>
+								<td class="fragment" data-fragment-index="2">0.344</td>
+								<td class="fragment" data-fragment-index="2">0.304</td>
+							</tr>
+							<tr>
+								<td>Pilita Clark</td>
+								<td>Business and Market</td>
+								<td class="fragment" data-fragment-index="2">0.551</td>
+								<td class="fragment" data-fragment-index="2">0.443</td>
+							</tr>
+							<tr>
+								<td>Robert Wright</td>
+								<td>Social and Governmental Policy</td>
+								<td class="fragment" data-fragment-index="2">0.392</td>
+								<td style="color: #86BC25; font-weight: bold;" class="fragment" data-fragment-index="2">0.581</td>
+							</tr>
+							<tr>
+								<td>Steve Johnson</td>
+								<td>Deputy editor EM Squared (tech)</td>
+								<td class="fragment" data-fragment-index="2">0.511</td>
+								<td class="fragment" data-fragment-index="2">0.333</td>
+							</tr>
+							<tr>
+								<td>Tim Bradshaw</td>
+								<td>Digital Technology Industries</td>
+								<td class="fragment" data-fragment-index="2">0.553</td>
+								<td class="fragment" data-fragment-index="2">0.466</td>
+							</tr>
+						</table>
+					</section>
+				</section>
+				<section id="conclusion">
+					<section class="main-slide" data-background-color="#86BC25">
+						<h2>Conclusion</h2>
+						<p>Contributions and future perspective</p>
+					</section>
+					<section>
+						<h2>Thesis Contributions</h2>
+						<ol>
+							<li style="margin-top:20px;">Streaming Architecture for Automatic Assessment of Financial News Articles</li>
+							<li style="margin-top:20px;">Novel Adaptive Unsupervised Sentiment Analysis Method</li>
+							<li style="margin-top:20px;">Novel Entity Recognition Post-processing Method</li>
+							<li style="margin-top:20px;">Cross-language Stream-based Test Environment</li>
+						</ol>
+					</section>
+					<section>
+						<h2>Future research</h2>
+						<ol>
+							<li style="margin-top:20px;"><b>Sentiment analysis:</b> Strengthen AdaUSA</li>
+							<li style="margin-top:20px;"><b>Entity Linking:</b> Adaptive NER+NEL Model</li>
+							<li style="margin-top:20px;"><b>Financial News Assessment:</b> Efficient Market Hypothesis</li>
+						</ol>
+					</section>
+				</section>
+				<section id="thank-you">
+					<section class="main-slide" data-background-color="#86BC25">
+						<h1>Thank you!</h1>
+					</section>
+				</section>
+			</div>
+		</div>
+		<script src="js/reveal.js"></script>
+		<script>
+			Reveal.initialize({
+				// Display presentation control arrows
+				controls: false,
+
+				// Help the user learn the controls by providing hints, for example by
+				// bouncing the down arrow when they first encounter a vertical slide
+				controlsTutorial: false,
+
+				// Determines where controls appear, "edges" or "bottom-right"
+				controlsLayout: 'bottom-right',
+
+				// Visibility rule for backwards navigation arrows; "faded", "hidden"
+				// or "visible"
+				controlsBackArrows: 'faded',
+
+				// Display a presentation progress bar
+				progress: false,
+
+				// Add the current slide number to the URL hash so that reloading the
+				// page/copying the URL will return you to the same slide
+				hash: true,
+
+				// Push each slide change to the browser history. Implies `hash: true`
+				history: true,
+
+				// Enable keyboard shortcuts for navigation
+				keyboard: true,
+
+				// Enable the slide overview mode. Can be entered by pressing o on keyboard.
+				overview: true,
+
+				// Vertical centering of slides
+				center: true,
+
+				// Enables touch navigation on devices with touch input
+				touch: true,
+
+				// Loop the presentation
+				loop: false,
+
+				// Change the presentation direction to be RTL. Boy: Don't know what this does
+				rtl: false,
+
+				// See https://github.com/hakimel/reveal.js/#navigation-mode
+				navigationMode: 'linear',
+
+				// Randomizes the order of slides each time the presentation loads
+				shuffle: false,
+
+				// Turns fragments on and off globally
+				fragments: true,
+
+				// Flags whether to include the current fragment in the URL,
+				// so that reloading brings you to the same fragment position
+				fragmentInURL: false,
+
+				// Flags if the presentation is running in an embedded mode,
+				// i.e. contained within a limited portion of the screen
+				embedded: false,
+
+				// Flags if we should show a help overlay when the questionmark
+				// key is pressed
+				help: true,
+
+				// Flags if speaker notes should be visible to all viewers
+				showNotes: false,
+
+				// Global override for autoplaying embedded media (video/audio/iframe)
+				// - null: Media will only autoplay if data-autoplay is present
+				// - true: All media will autoplay, regardless of individual setting
+				// - false: No media will autoplay, regardless of individual setting
+				autoPlayMedia: null,
+
+				// Global override for preloading lazy-loaded iframes
+				// - null: Iframes with data-src AND data-preload will be loaded when within
+				//   the viewDistance, iframes with only data-src will be loaded when visible
+				// - true: All iframes with data-src will be loaded when within the viewDistance
+				// - false: All iframes with data-src will be loaded only when visible
+				preloadIframes: null,
+
+				// Number of milliseconds between automatically proceeding to the
+				// next slide, disabled when set to 0, this value can be overwritten
+				// by using a data-autoslide attribute on your slides
+				autoSlide: 0,
+
+				// Stop auto-sliding after user input
+				autoSlideStoppable: true,
+
+				// Use this method for navigation when auto-sliding
+				autoSlideMethod: Reveal.navigateNext,
+
+				// Specify the average time in seconds that you think you will spend
+				// presenting each slide. This is used to show a pacing timer in the
+				// speaker view
+				defaultTiming: 60,
+
+				// Enable slide navigation via mouse wheel
+				mouseWheel: false,
+
+				// Hide cursor if inactive
+				hideInactiveCursor: true,
+
+				// Time before the cursor is hidden (in ms)
+				hideCursorTime: 1000,
+
+				// Hides the address bar on mobile devices
+				hideAddressBar: true,
+
+				// Opens links in an iframe preview overlay
+				// Add `data-preview-link` and `data-preview-link="false"` to customise each link
+				// individually
+				previewLinks: false,
+
+				// Transition style
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Transition speed
+				transitionSpeed: 'default', // default/fast/slow
+
+				// Transition style for full page slide backgrounds
+				backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
+
+				// Number of slides away from the current that are visible
+				viewDistance: 3,
+
+				// Parallax background image
+				parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+				// Parallax background size
+				parallaxBackgroundSize: '', // CSS syntax, e.g. "2100px 900px"
+
+				// Number of pixels to move the parallax background per slide
+				// - Calculated automatically unless specified
+				// - Set to 0 to disable movement along an axis
+				parallaxBackgroundHorizontal: null,
+				parallaxBackgroundVertical: null,
+
+				// The display mode that will be used to show slides
+				display: 'block',
+
+
+				// The "normal" size of the presentation, aspect ratio will be preserved
+				// when the presentation is scaled to fit different resolutions. Can be
+				// specified using percentage units.
+				width: 1200,
+				height: 880,
+
+				// Factor of the display size that should remain empty around the content
+				margin: 0.1,
+
+				// Bounds for smallest/largest possible scale to apply to content
+				minScale: 0.2,
+				maxScale: 1.5,
+
+				multiplex: {
+					// Example values. To generate your own, see the socket.io server instructions.
+					secret: '15626611992974836380', // Obtained from the socket.io server. Gives this (the master) control of the presentation
+					id: 'a1104403746a4f17', // 'a1104403746a4f17', // Obtained from socket.io server
+					url: 'https://reveal-js-multiplex-ccjbegmaii.now.sh' // Location of socket.io server
+				},
+
+				dependencies: [
+					{ src: '//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js', async: true },
+					{ src: 'plugin/multiplex/master.js', async: true },
+
+					// Interpret Markdown in <section> elements
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+
+					// Syntax highlight for <code> elements
+					{ src: 'plugin/highlight/highlight.js', async: true },
+
+					// Zoom in and out with Alt+click
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+
+					// Speaker notes
+					{ src: 'plugin/notes/notes.js', async: true },
+
+					// MathJax
+					{ src: 'plugin/math/math.js', async: true },
+
+					{ src: 'plugin/embed-tweet/embed-tweet.js' },
+
+				]
+			});
+
+			Reveal.configure({ autoSlide: 0 });
+			Reveal.configure({ slideNumber: true });
+			Reveal.configure({ slideNumber: 'c' });
+
+		</script>
+	</body>
+</html>
